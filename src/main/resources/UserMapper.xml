@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+    这里配置所有用到的sql语句
+    namespace:这个Mapper文件的唯一标示，可自定义，但是不能重复
+ -->
+<mapper namespace="namespace1">
+    <!--
+        each sql is a statement
+        select 代表查询，相应的还有update，insert，delete
+        id:这个statement的唯一标示
+        parameterType:输入参数类型，写类的全路径
+        resultType:查询结果类型，写全路径
+     -->
+    <select id="getById" parameterType="java.lang.Integer" resultType="com.cxn.model.User">
+        <!-- #{id}作为预编译的站位符，映射要传入的参数 -->
+        SELECT * FROM  tbl_user WHERE  id = #{id}
+    </select>
+
+    <!-- 查询全部 -->
+    <select id="queryAll" resultType="com.cxn.model.User">
+        SELECT * FROM  tbl_user
+    </select>
+
+    <insert id="insertUser" parameterType="com.cxn.model.User">
+        INSERT INTO tbl_user(
+        name,
+        age,
+        address
+        )
+        VALUES
+        (
+        #{name},
+        #{age},
+        #{address}
+        )
+    </insert>
+
+    <update id="updateUser" parameterType="com.cxn.model.User">
+        UPDATE  tbl_user
+        SET
+            name = #{name},
+            age = #{age},
+            address = #{address}
+        WHERE
+            id = #{id}
+    </update>
+
+
+    <delete id="removeUser" parameterType="java.lang.Integer">
+        DELETE  FROM  tbl_user WHERE  id = #{id}
+    </delete>
+
+</mapper>
