@@ -6,6 +6,22 @@
     <!-- 加载外部配置文件，resource：指向项目中resource目录 -->
     <properties resource="jdbc.properties"/>
 
+    <settings>
+        <!-- 可以实现驼峰命名匹配 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <!--<typeAliases>-->
+        <!--&lt;!&ndash; 给具体类起一个别名，以后在配置中使用User，就代表使用了全路径 &ndash;&gt;-->
+        <!--<typeAlias type="com.cxn.model.User" alias="User"/>-->
+        <!--&lt;!&ndash; 指定一个包，Mybatis会自动扫描该包下所有的类，并且给这这类设置默认的别名，就是类的名字 &ndash;&gt;-->
+        <!--<package name="com.cxn.model"/>-->
+    <!--</typeAliases>-->
+
+    <!-- 引入自定义拦截器插件 -->
+    <plugins>
+        <plugin interceptor="com.cxn.plugins.ExamplePlugin"/>
+    </plugins>
     <!-- 运行环境，可以配置多个，default：默认指向development的环境 -->
     <environments default="development">
         <!-- 环境参数，id：这个环境的唯一标识 -->
