@@ -11,12 +11,12 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
     </settings>
 
-    <!--<typeAliases>-->
-        <!--&lt;!&ndash; 给具体类起一个别名，以后在配置中使用User，就代表使用了全路径 &ndash;&gt;-->
-        <!--<typeAlias type="com.cxn.model.User" alias="User"/>-->
-        <!--&lt;!&ndash; 指定一个包，Mybatis会自动扫描该包下所有的类，并且给这这类设置默认的别名，就是类的名字 &ndash;&gt;-->
-        <!--<package name="com.cxn.model"/>-->
-    <!--</typeAliases>-->
+    <typeAliases>
+        <!-- 给具体类起一个别名，以后在配置中使用User，就代表使用了全路径 -->
+        <typeAlias type="com.cxn.model.User" alias="User"/>
+        <!-- 指定一个包，Mybatis会自动扫描该包下所有的类，并且给这这类设置默认的别名，就是类的名字 -->
+        <package name="com.cxn.model"/>
+    </typeAliases>
 
     <!-- 引入自定义拦截器插件 -->
     <plugins>
@@ -42,6 +42,7 @@
         <!-- 方式一：resource:在项目的resource目录下寻找 -->
         <mapper resource="UserMapper.xml"/>
         <mapper resource="UserDao.xml"/>
+        <mapper resource="QueryMapper.xml"/>
         <!-- 方式三：使用接口的全路径名称,要求配对的UserMapper.xml文件必须和接口处于同一包下 -->
         <!--<mapper class="com.cxn.dao.UserMapper"/>-->
         <!-- 方式四：

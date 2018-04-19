@@ -1,6 +1,7 @@
 package com.cxn.dao;
 
 import com.cxn.model.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface UserMapper {
 
     User getById(Integer id);
 
-    User getByName(String name);
+    List<User> getByName(@Param("name") String name);
 
     List<User> queryAll();
 
@@ -24,4 +25,10 @@ public interface UserMapper {
     void updateUser(User user);
 
     void removeUser(Integer id);
+
+    List<User> queryAllUserBySort(@Param("orderType") Integer orderType);
+
+    List<User> queryUserByNameAndAge(@Param("name") String name, @Param("age") Integer age);
+
+    List<User> queryUserByIds(@Param("ids") List<Integer> ids);
 }

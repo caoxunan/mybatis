@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cxn.dao.QueryMapper">
+
+    <resultMap id="orderUserResult" type="com.cxn.model.Order" autoMapping="true">
+        <!-- 配置主键信息， -->
+        <id property="id" column="id"/>
+        <!-- association:子对象属性的映射
+         property:这个子对象在父对象中的属性名
+         javaType：这个子对象的数据类型
+         -->
+        <association property="user" javaType="com.cxn.model.User" autoMapping="true">
+            <!-- 这里配置的是字对象属性与列的对应关系，配置方式参考ResultMap -->
+            <id column="user_id" property="id"/>
+        </association>
+
+    </resultMap>
+
+    <select id="queryOrderAndUserByOrderNumber" resultMap="orderUserResult" parameterType="java.lang.String">
+        SELECT o.*, u.*
+        FROM  tb_order o
+        LEFT  JOIN  tbl_user u on u.id = o.user_id
+        WHERE o.order_number = #{orderNumber}
+    </select>
+
+    <resultMap id="orderUserOrderDetail" type="Order" extends="orderUserResult">
+        <!-- 定义OrderDetail
+            property:子对象在父对象中的字段名称，
+            javaType:子对象所属的集合类型
+            ofType:子对象中集合内的元素类型
+            -->
+        <collection property="orderDetails" javaType="java.util.List" ofType="OrderDetail" autoMapping="true">
+            <id column="detail_id" property="id"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryOrderWithUserAndOrderDetailsByOrderNumber" resultMap="orderUserOrderDetail">
+        SELECT o.*, u.*, od.*, od.id as orderDetailId
+        FROM tb_order o
+        LEFT  JOIN  tbl_user u on u.id = o.user_id
+        LEFT  JOIN  tb_order_detail od ON o.id = od.order_id
+        WHERE o.order_number = #{orderNumber}
+    </select>
+
+    <resultMap id="qOrderUserDetailItemMap" type="Order" autoMapping="true">
+        <id property="id" column="id"/>
+
+        <association property="user" javaType="com.cxn.model.User" autoMapping="true">
+            <!-- 这里配置的是字对象属性与列的对应关系，配置方式参考ResultMap -->
+            <id column="user_id" property="id"/>
+        </association>
+
+        <collection property="orderDetails" javaType="java.util.List" ofType="OrderDetail" autoMapping="true">
+            <id column="detail_id" property="id"/>
+            <association property="item" javaType="Item" autoMapping="true">
+                <!-- 这里配置的是字对象属性与列的对应关系，配置方式参考ResultMap -->
+                <id column="item_id" property="id"/>
+            </association>
+        </collection>
+    </resultMap>
+    <select id="queryOrderUserOrderDetailItemByOrderNumber" resultMap="qOrderUserDetailItemMap" >
+        SELECT o.*, u.*, od.*, od.id as orderDetailId, i.*
+        FROM  tb_order o
+        LEFT  JOIN  tbl_user u ON u.id = o.user_id
+        LEFT  JOIN  tb_order_detail od on od.order_id = o.id
+        LEFT  JOIN  tb_item i on i.id = od.item_id
+        WHERE  o.order_number = #{orderNumber}
+    </select>
+
+</mapper>

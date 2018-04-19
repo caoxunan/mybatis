@@ -19,15 +19,17 @@
     </resultMap>
 
     <!-- sql片段-->
-    <sql id="userColumvs">
+    <sql id="userColumns">
         id, age, name, address
     </sql>
     <select id="getByName" parameterType="java.lang.String" resultMap="userResultMap">
         <!-- #{id}作为预编译的站位符，映射要传入的参数 -->
-        SELECT <include refid="userColumvs"/>
+        SELECT <include refid="userColumns"/>
         FROM  tbl_user
-        WHERE
-        name = #{name}
+        WHERE 1=1
+        <if test="name != null and name.trim() != '' ">
+            AND NAME LIKE "%${name}%"
+        </if>
     </select>
     <!--
         each sql is a statement
@@ -65,10 +67,18 @@
 
     <update id="updateUser" parameterType="com.cxn.model.User">
         UPDATE  tbl_user
-        SET
-            name = #{name},
-            age = #{age},
-            address = #{address}
+        <!-- set标签会自动校验语法错误，多余的','会被去除 -->
+        <set>
+          <if test="name !=null and name.trim() != ''">
+              name = #{name},
+          </if>
+          <if test="address !=null and address.trim() != ''">
+              address = #{address},
+          </if>
+          <if test="age !=null">
+              age = #{age},
+          </if>
+        </set>
         WHERE
             id = #{id}
     </update>
@@ -78,4 +88,45 @@
         DELETE  FROM  tbl_user WHERE  id = #{id}
     </delete>
 
+    <select id="queryAllUserBySort" parameterType="java.lang.Integer" resultType="com.cxn.model.User">
+        SELECT <include refid="userColumns"/>
+        FROM tbl_user
+        <choose>
+            <when test="orderType == 0">
+                ORDER BY age ASC
+            </when>
+            <when test="orderType == 1">
+                ORDER  BY age DESC
+            </when>
+            <otherwise>
+                ORDER BY id ASC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="queryUserByNameAndAge" resultType="com.cxn.model.User">
+        SELECT * FROM tbl_user
+        <!-- where的作用就是检测sql语句，排除多余的and，避免sql错误 -->
+        <where>
+            <if test="name != null and name.trim() != ''">
+                AND name LIKE '%${name}%'
+            </if>
+            <if test="age != null">
+                AND  age &lt; #{age}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="queryUserByIds" resultMap="userResultMap" >
+        SELECT <include refid="userColumns"/>
+        FROM  tbl_user
+        WHERE id IN
+        <!-- collection:集合的名称，如果使用了Param注解，这里就是注解中的值
+            item：遍历取到的元素
+            -->
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>
