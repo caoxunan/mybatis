@@ -25,6 +25,7 @@
     <mappers>
         <!-- resource:在项目的resource目录下寻找 -->
         <mapper resource="UserMapper.xml"/>
+        <mapper resource="UserDao.xml"/>
     </mappers>
 
 </configuration>

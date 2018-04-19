@@ -6,7 +6,7 @@
     这里配置所有用到的sql语句
     namespace:这个Mapper文件的唯一标示，可自定义，但是不能重复
  -->
-<mapper namespace="com.cxn.dao.UserMapper">
+<mapper namespace="namespace1">
     <!--
         each sql is a statement
         select 代表查询，相应的还有update，insert，delete
