@@ -9,6 +9,10 @@
     <settings>
         <!-- 可以实现驼峰命名匹配 -->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 开启延迟加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- false为按需加载，用到哪个懒属性就加载哪个，true在第一次使用懒属性时，所有的属性都会被加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
     </settings>
 
     <typeAliases>

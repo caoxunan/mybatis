@@ -1,6 +1,7 @@
 package com.cxn.dao;
 
 import com.cxn.model.Order;
+import com.cxn.model.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -57,6 +58,14 @@ public class QueryMapperTest {
     public void queryOrderUserOrderDetailItemByOrderNumber(){
         Order order = queryMapper.queryOrderUserOrderDetailItemByOrderNumber("20140921001");
         System.out.println(order);
+    }
+
+    @Test
+    public void lazyQueryOrderWithUserByOrderNumber(){
+        Order order = queryMapper.lazyQueryOrderWithUserByOrderNumber("20140921001");
+        System.out.println("这里是分割线=========");
+        User user = order.getUser();
+        System.out.println(user);
     }
 
 }

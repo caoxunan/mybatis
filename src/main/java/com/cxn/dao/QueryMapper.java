@@ -31,4 +31,11 @@ public interface QueryMapper {
      * @return
      */
     Order queryOrderUserOrderDetailItemByOrderNumber(String orderNumber);
+
+    /**
+     * 测试懒加载
+     * @param orderNumber
+     * @return
+     */
+    Order lazyQueryOrderWithUserByOrderNumber(String orderNumber);
 }

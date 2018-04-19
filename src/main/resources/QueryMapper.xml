@@ -69,4 +69,16 @@
         WHERE  o.order_number = #{orderNumber}
     </select>
 
+    <resultMap id="lazyLoad" type="Order" autoMapping="true">
+        <id column="id" property="id"/>
+        <association property="user" javaType="User" autoMapping="true" select="com.cxn.dao.UserMapper.getById" column="user_id">
+            <id column="id" property="id"/>
+        </association>
+    </resultMap>
+
+    <select id="lazyQueryOrderWithUserByOrderNumber" resultMap="lazyLoad" >
+        SELECT * FROM  tb_order o WHERE  o.order_number = #{orderNumber}
+    </select>
+
+
 </mapper>
