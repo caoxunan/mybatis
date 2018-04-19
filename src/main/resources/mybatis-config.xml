@@ -39,9 +39,17 @@
 
     <!-- 指定所有的Mapper映射文件-->
     <mappers>
-        <!-- resource:在项目的resource目录下寻找 -->
+        <!-- 方式一：resource:在项目的resource目录下寻找 -->
         <mapper resource="UserMapper.xml"/>
         <mapper resource="UserDao.xml"/>
+        <!-- 方式三：使用接口的全路径名称,要求配对的UserMapper.xml文件必须和接口处于同一包下 -->
+        <!--<mapper class="com.cxn.dao.UserMapper"/>-->
+        <!-- 方式四：
+                配置Mapper接口所在包的名称，Mybatis会自动扫描接口及接口对应的Mapper.xml文件
+                要求配对的UserMapper.xml文件必须和接口处于同一包下
+                实际中使用扫描包+@Mapper注解的形式开发比较好
+         -->
+        <!--<package name="com.cxn.dao"/>-->
     </mappers>
 
 </configuration>

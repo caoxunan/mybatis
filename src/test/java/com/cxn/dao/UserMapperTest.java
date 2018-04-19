@@ -36,7 +36,7 @@ public class UserMapperTest {
         // 不使用实现类来测试mubatis动态代理实现dao
         // userDao = new UserDaoImpl(sqlSession);
         // 这里通过SqlSession获取指定Mapper接口的代理实现类
-        userMapper = sqlSession.getMapper(UserMapper.class);
+         userMapper = sqlSession.getMapper(UserMapper.class);
     }
 
     @Test
@@ -62,6 +62,7 @@ public class UserMapperTest {
         user.setAddress("beijingchaoyang");
         user.setAge(30);
         userMapper.insertUser(user);
+        System.out.println("id回显：" + user);
     }
 
     @Test
