@@ -8,6 +8,28 @@
  -->
 <mapper namespace="com.cxn.dao.UserMapper">
     <!--
+        id:唯一标示，不可重复，
+        type：这个映射所标示的Java对象类型，可以用别名
+        利用resultMap也是解决字段名与列名不一致问题的一种方案
+        autoMapping自动映射字段名，默认为true，所以非必要将所有的映射关系列出-->
+    <resultMap id="userResultMap" type="com.cxn.model.User">
+        <!-- 配置主键信息， -->
+        <id property="id" column="id"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <!-- sql片段-->
+    <sql id="userColumvs">
+        id, age, name, address
+    </sql>
+    <select id="getByName" parameterType="java.lang.String" resultMap="userResultMap">
+        <!-- #{id}作为预编译的站位符，映射要传入的参数 -->
+        SELECT <include refid="userColumvs"/>
+        FROM  tbl_user
+        WHERE
+        name = #{name}
+    </select>
+    <!--
         each sql is a statement
         select 代表查询，相应的还有update，insert，delete
         id:这个statement的唯一标示

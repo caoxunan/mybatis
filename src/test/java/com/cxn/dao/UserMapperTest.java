@@ -44,6 +44,11 @@ public class UserMapperTest {
         User user = userMapper.getById(1);
         System.out.println(user);
     }
+    @Test
+    public void getByName() {
+        User user = userMapper.getByName("小米");
+        System.out.println(user);
+    }
 
     @Test
     public void queryAll() {

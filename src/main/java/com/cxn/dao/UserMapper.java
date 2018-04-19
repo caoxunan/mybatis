@@ -15,6 +15,8 @@ public interface UserMapper {
 
     User getById(Integer id);
 
+    User getByName(String name);
+
     List<User> queryAll();
 
     void insertUser(User user);
